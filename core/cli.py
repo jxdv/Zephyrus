@@ -34,6 +34,18 @@ def parse_cli():
         "--threads",
         help="Number of threads to use"
     )
-    args = vars(parser.parse_args())
+    parser.add_argument(
+        "--ignore-prefix",
+        nargs="+",
+        dest="ignored_prefixes",
+        help="Files with supplied prefixes will be ignored"
+    )
+    parser.add_argument(
+        "--ignore-suffix",
+        nargs="+",
+        dest="ignored_suffixes",
+        help="Files with supplied suffixes will be ignored"
+    )
+    args = parser.parse_args()
 
     return args
