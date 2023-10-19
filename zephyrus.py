@@ -22,6 +22,7 @@ def main():
     print_logo()
 
     monitor = Monitor(args["target"], args["hash"], args["verbose"], args["threads"])
+    monitor.run()
 
 
 if __name__ == "__main__":

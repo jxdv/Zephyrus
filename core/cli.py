@@ -21,7 +21,8 @@ def parse_cli():
     parser.add_argument(
         "--hash",
         choices=["sha256", "md5"],
-        help="Hashing algorithm for calculating checksums"
+        default="sha256",
+        help="Hashing algorithm for calculating checksums (default is sha256)"
     )
     parser.add_argument(
         "--verbose",
