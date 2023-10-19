@@ -16,7 +16,7 @@ def parse_cli():
     )
     parser.add_argument(
         "--target",
-        help="Path to file which contains newline-delimited targets"
+        help="Path to dir which contains file to be monitored"
     )
     parser.add_argument(
         "--hash",
