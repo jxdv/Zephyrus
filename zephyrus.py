@@ -21,7 +21,7 @@ def main():
 
     print_logo()
 
-    monitor = Monitor(args["target"], args["hash"], args["silent"])
+    monitor = Monitor(args["target"], args["hash"], args["verbose"], args["threads"])
 
 
 if __name__ == "__main__":

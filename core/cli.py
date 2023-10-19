@@ -24,10 +24,14 @@ def parse_cli():
         help="Hashing algorithm for calculating checksums"
     )
     parser.add_argument(
-        "--silent",
+        "--verbose",
         action="store_true",
         default=False,
-        help="Only log critical messages such as integrity change"
+        help="Verbose logging"
+    )
+    parser.add_argument(
+        "--threads",
+        help="Number of threads to use"
     )
     args = vars(parser.parse_args())
 
