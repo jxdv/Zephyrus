@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+import os
 
 from core import version
 from core.cli import parse_cli
@@ -26,4 +27,11 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\nInterrupted")
+        try:
+            sys.exit(130)
+        except SystemExit:
+            os._exit(130)
