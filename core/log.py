@@ -6,15 +6,15 @@ class ZephyrusLogger(logging.Logger):
     def __init__(self, name, level=logging.INFO):
         self.name = name
         self.level = level
-        self.format = "%(name)s > %(levelname)s > %(message)s"
 
-        self.stdout_fmt = logging.Formatter(self.format)
-        self.stdout_logger = logging.StreamHandler(sys.stdout)
-        self.stdout_logger.setFormatter(self.stdout_fmt)
+        stdout_fmt = "%(name)s > %(levelname)s > %(message)s"
+        formatter = logging.Formatter(stdout_fmt)
+        stdout_logger = logging.StreamHandler(sys.stdout)
+        stdout_logger.setFormatter(formatter)
 
         self.logger = logging.getLogger(self.name)
         self.logger.setLevel(self.level)
-        self.logger.addHandler(self.stdout_logger)
+        self.logger.addHandler(stdout_logger)
 
     def info(self, msg):
         self.logger.info(msg)
