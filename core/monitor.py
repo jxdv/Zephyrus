@@ -60,6 +60,7 @@ Current Zephyrus monitoring configuration is below. If you'd like to change any 
 terminate Zephyrus and run again with correct CLI args.
         """)
         print("-" * 50)
+        print(f"[+] Number of Targets: {len(self.targets)}")
         print(f"[+] Hashing algorithm: {self.hash_alg}")
         print(f"[+] Verbosity: {self.verbose}")
         print(f"[+] Number of threads: {self.threads}")
