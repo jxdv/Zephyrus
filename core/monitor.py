@@ -43,3 +43,16 @@ class Monitor:
 
     def run(self):
         self._parse_target(self.target)
+
+        print("""
+Current Zephyrus monitoring configuration is below. If you'd like to change any of these settings,
+terminate Zephyrus and run again with correct CLI args.
+        """)
+        print("-" * 50)
+        print(f"[+] Hashing algorithm: {self.hash_alg}")
+        print(f"[+] Verbosity: {self.verbose}")
+        print(f"[+] Number of threads: {self.threads}")
+        print(f"[+] Ignored prefixes: {self.ignored_prefixes}")
+        print(f"[+] Ignored suffixes: {self.ignored_suffixes}")
+        print("-" * 50)
+        
