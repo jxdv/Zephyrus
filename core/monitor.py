@@ -43,5 +43,3 @@ class Monitor:
 
     def run(self):
         self._parse_target(self.target)
-
-        seconds = zephyrus_prompt("Interval for monitoring (in seconds):", choice_type="int")

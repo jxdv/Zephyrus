@@ -22,7 +22,7 @@ def print_logo():
     """)
 
 
-def zephyrus_prompt(prompt_msg, choice_type, choices=None):
+def zephyrus_prompt(prompt_msg, choice_type=None, choices=None):
     if choice_type == "int":
         try:
             choice = int(input(f"{prompt_msg}\nzephyrus> "))
