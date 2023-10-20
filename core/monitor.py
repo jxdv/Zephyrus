@@ -18,12 +18,12 @@ class Monitor:
         self.ignored_suffixes = ignored_suffixes
         self.targets = []
 
-    def filter_check(self, file_path):
-        if self.ignored_prefixes:
-            return any(file_path.startswith(prefix) for prefix in self.ignored_prefixes)
-        if self.ignored_suffixes:
-            return any(file_path.endswith(suffix) for suffix in self.ignored_suffixes)
-        return False
+    @staticmethod
+    def help_cmd():
+        print("help / ? -> show this help message")
+        print("email -> configure notifications to be sent out using mail")
+        print("load -> load / reload baseline")
+        print("exit -> exit Zephyrus and stop monitoring")
 
     def _parse_target(self, target):
         if not os.path.isdir(target):
@@ -41,9 +41,20 @@ class Monitor:
             logger.info("Target directory is empty!")
             sys.exit(1)
 
-    def run(self):
-        self._parse_target(self.target)
+    def filter_check(self, file_path):
+        if self.ignored_prefixes:
+            return any(file_path.startswith(prefix) for prefix in self.ignored_prefixes)
+        if self.ignored_suffixes:
+            return any(file_path.endswith(suffix) for suffix in self.ignored_suffixes)
+        return False
 
+    def load_baseline(self):
+        pass
+
+    def email_config(self):
+        pass
+
+    def menu(self):
         print("""
 Current Zephyrus monitoring configuration is below. If you'd like to change any of these settings,
 terminate Zephyrus and run again with correct CLI args.
@@ -55,4 +66,21 @@ terminate Zephyrus and run again with correct CLI args.
         print(f"[+] Ignored prefixes: {self.ignored_prefixes}")
         print(f"[+] Ignored suffixes: {self.ignored_suffixes}")
         print("-" * 50)
-        
+
+        print("Enter 'help' or '?' to see all available commands")
+        while True:
+            cmd = zephyrus_prompt("", choices=["help", "?", "load", "email", "exit"])
+
+            if cmd in ["help", "?"]:
+                self.help_cmd()
+            elif cmd == "load":
+                self.load_baseline()
+            elif cmd == "email":
+                self.email_config()
+            elif cmd == "exit":
+                logger.info("Take care!")
+                sys.exit(0)
+
+    def run(self):
+        self._parse_target(self.target)
+        self.menu()
