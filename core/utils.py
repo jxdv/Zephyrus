@@ -1,3 +1,10 @@
+import sys
+
+from .log import ZephyrusLogger
+
+logger = ZephyrusLogger(__name__)
+
+
 def print_logo():
     print(r"""
         
@@ -13,3 +20,21 @@ def print_logo():
 
 
     """)
+
+
+def zephyrus_prompt(prompt_msg, choice_type, choices=None):
+    if choice_type == "int":
+        try:
+            choice = int(input(f"{prompt_msg}\nzephyrus> "))
+        except ValueError:
+            logger.error("zephyrus_prompt: Wrong data type!")
+            sys.exit(1)
+    else:
+        choice = input(f"{prompt_msg}\nzephyrus> ")
+
+    if isinstance(choices, str):
+        return choice == choices
+    elif isinstance(choices, list):
+        return choice in choices
+    else:
+        return choice
