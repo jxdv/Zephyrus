@@ -5,13 +5,12 @@ class Target:
     def __init__(self, target_path):
         self.target_path = target_path
 
-    @staticmethod
-    def checksum(target_path, hash_alg, buff_size=128*1024):
+    def checksum(self, hash_alg, buff_size=128*1024):
         h = hashlib.new(hash_alg)
         buffer = bytearray(buff_size)
         buffer_view = memoryview(buffer)
 
-        with open(target_path, "rb", buffering=0) as f:
+        with open(self.target_path, "rb", buffering=0) as f:
             while True:
                 chunk = f.readinto(buffer_view)
                 if not chunk:
