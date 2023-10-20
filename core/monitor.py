@@ -49,7 +49,10 @@ class Monitor:
         return False
 
     def load_baseline(self):
-        pass
+        for target in self.targets:
+            if self.verbose:
+                print(f"{repr(target)} -> {target.checksum(self.hash_alg)}")
+        logger.info("Baseline loaded.")
 
     def email_config(self):
         pass
