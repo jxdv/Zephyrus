@@ -23,8 +23,8 @@ class TestChecksum(unittest.TestCase):
         for file_name in self.test_files:
             md5 = expected_md5.get(file_name)
             file_path = os.path.abspath(os.path.join("core/tests/data", file_name))
-            target = Target(file_path)
-            self.assertEqual(target.checksum(hash_alg="md5"), md5)
+            target = Target(file_path, hash_alg="md5")
+            self.assertEqual(target.checksum(), md5)
 
     def test_sha256(self):
         expected_sha256 = {
@@ -38,8 +38,8 @@ class TestChecksum(unittest.TestCase):
         for file_name in self.test_files:
             sha256 = expected_sha256.get(file_name)
             file_path = os.path.abspath(os.path.join("core/tests/data", file_name))
-            target = Target(file_path)
-            self.assertEqual(target.checksum(hash_alg="sha256"), sha256)
+            target = Target(file_path, hash_alg="sha256")
+            self.assertEqual(target.checksum(), sha256)
 
 
 if __name__ == "__main__":

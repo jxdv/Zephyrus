@@ -34,6 +34,7 @@ def main():
                       args.ignored_prefixes,
                       args.ignored_suffixes
                       )
+    monitor.menu()
 
 
 if __name__ == "__main__":

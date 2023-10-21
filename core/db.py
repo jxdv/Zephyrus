@@ -1,3 +1,5 @@
+import os
+import shutil
 from pathlib import Path
 
 import plyvel
@@ -10,7 +12,11 @@ logger = ZephyrusLogger(__name__)
 class LevelStorage:
     def __init__(self):
         project_path = Path(__file__).absolute().parent.parent
-        db_path = project_path / "storage/"
+        db_path = project_path / "storage"
+
+        if os.path.exists(db_path):
+            shutil.rmtree(db_path)
+
         self.db = plyvel.DB(f"{db_path}", create_if_missing=True)
 
     def write_batch(self, targets):

@@ -27,17 +27,26 @@ class Monitor:
         # LevelDB database
         self.db = LevelStorage()
 
-        # Zephyrus execution
-        self.parse_target_dir(self.target_dir)
-        self.menu()
-
     @staticmethod
     def help_cmd():
         print("help / ? - show this help message")
+        print("config - show current config")
         print("load - load / reload baseline")
         print("start - start monitoring")
         print("email - configure notifications to be sent out using mail")
         print("exit - exit Zephyrus and stop monitoring")
+
+    def show_config(self):
+        print("This is the current Zephyrus config. Restart with different CLI args to change it.")
+        print("-" * 50)
+        print(f"[+] Number of Targets: {len(self.targets)}")
+        print(f"[+] Monitoring interval: {self.interval}s")
+        print(f"[+] Hashing algorithm: {self.hash_alg}")
+        print(f"[+] Verbosity: {self.verbose}")
+        print(f"[+] Number of threads: {self.threads}")
+        print(f"[+] Ignored prefixes: {self.ignored_prefixes}")
+        print(f"[+] Ignored suffixes: {self.ignored_suffixes}")
+        print("-" * 50)
 
     def parse_target_dir(self, target):
         if not os.path.exists(target):
@@ -57,7 +66,7 @@ class Monitor:
                     self.targets.append(target)
 
         if not self.targets:
-            logger.info("Target directory is empty!")
+            logger.info("No targets loaded!")
             sys.exit(1)
 
     def filter_check(self, file_path):
@@ -93,20 +102,11 @@ class Monitor:
             self.verify_baseline()
 
     def menu(self):
-        print("This is the current Zephyrus config. Restart with different CLI args to change it.")
-        print("-" * 50)
-        print(f"[+] Number of Targets: {len(self.targets)}")
-        print(f"[+] Monitoring interval: {self.interval}s")
-        print(f"[+] Hashing algorithm: {self.hash_alg}")
-        print(f"[+] Verbosity: {self.verbose}")
-        print(f"[+] Number of threads: {self.threads}")
-        print(f"[+] Ignored prefixes: {self.ignored_prefixes}")
-        print(f"[+] Ignored suffixes: {self.ignored_suffixes}")
-        print("-" * 50)
+        self.parse_target_dir(self.target_dir)
 
         print("Enter 'help' or '?' to see all available commands")
         while True:
-            cmd = zephyrus_prompt("", choices=["help", "?", "load", "email", "exit", "start"])
+            cmd = zephyrus_prompt("", choices=["help", "?", "load", "email", "exit", "start", "config"])
 
             if cmd in ["help", "?"]:
                 self.help_cmd()
@@ -116,6 +116,9 @@ class Monitor:
                 self.email_config()
             elif cmd == "start":
                 self.start_monitor()
+            elif cmd == "config":
+                self.show_config()
             elif cmd == "exit":
                 logger.info("Take care!")
+                self.db.close_db()
                 sys.exit(0)
