@@ -11,7 +11,7 @@ logger = ZephyrusLogger(__name__)
 
 class Monitor:
     def __init__(self, target, hash_alg, verbose, threads, ignored_prefixes, ignored_suffixes):
-        self.target = target
+        self.target_dir = target
         self.hash_alg = hash_alg
         self.verbose = verbose
         self.threads = threads
@@ -26,7 +26,7 @@ class Monitor:
         print("load -> load / reload baseline")
         print("exit -> exit Zephyrus and stop monitoring")
 
-    def _parse_target_dir(self, target):
+    def parse_target_dir(self, target):
         if not os.path.isdir(target):
             logger.info(f"{target} is not a directory!")
             sys.exit(1)
@@ -35,7 +35,7 @@ class Monitor:
             for name in files:
                 file_path = os.path.join(path, name)
                 if not self.filter_check(name):
-                    target = Target(file_path)
+                    target = Target(file_path, self.hash_alg)
                     self.targets.append(target)
 
         if not self.targets:
@@ -50,11 +50,8 @@ class Monitor:
         return False
 
     def load_baseline(self):
-        for target in self.targets:
-            if self.verbose:
-                print(f"{repr(target)}: {target.checksum(self.hash_alg)}")
-        logger.info("Baseline loaded.")
         db = LevelStorage()
+        db.write_batch(self.targets)
 
     def email_config(self):
         pass
@@ -88,5 +85,5 @@ terminate Zephyrus and run again with correct CLI args.
                 sys.exit(0)
 
     def run(self):
-        self._parse_target_dir(self.target)
+        self.parse_target_dir(self.target_dir)
         self.menu()

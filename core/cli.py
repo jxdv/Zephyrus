@@ -2,8 +2,6 @@ import argparse
 
 
 def parse_cli():
-    """Parse command line arguments"""
-
     parser = argparse.ArgumentParser(
         prog="Zephyrus",
         description="Local-based File Integrity Monitor",
