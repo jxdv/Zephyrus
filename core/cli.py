@@ -17,6 +17,12 @@ def parse_cli():
         help="Path to dir which contains file to be monitored"
     )
     parser.add_argument(
+        "--seconds",
+        type=int,
+        default=21600,
+        help="Interval to check integrity of monitored targets"
+    )
+    parser.add_argument(
         "--hash",
         choices=["sha256", "md5"],
         default="sha256",

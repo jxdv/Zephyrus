@@ -21,6 +21,13 @@ class LevelStorage:
         wb.write()
         logger.info("Baseline loaded.")
 
-    def show_batch(self):
-        for file, file_sum in self.db:
-            print(file, file_sum)
+    def verify_integrity(self, target_path, target_checksum):
+        sn = self.db.snapshot()
+        stored_checksum = sn.get(target_path.encode())
+
+        return stored_checksum.decode() == target_checksum
+
+    def close_db(self):
+        if not self.db.closed:
+            self.db.close()
+            del self.db

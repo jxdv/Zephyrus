@@ -20,10 +20,20 @@ def main():
         print("Please specify a target file!")
         sys.exit(1)
 
+    if args.seconds < 60:
+        print("interval has to be >= 60s")
+        sys.exit(1)
+
     print_logo()
 
-    monitor = Monitor(args.target, args.hash, args.verbose, args.threads, args.ignored_prefixes, args.ignored_suffixes)
-    monitor.run()
+    monitor = Monitor(args.target,
+                      args.seconds,
+                      args.hash,
+                      args.verbose,
+                      args.threads,
+                      args.ignored_prefixes,
+                      args.ignored_suffixes
+                      )
 
 
 if __name__ == "__main__":
