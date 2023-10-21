@@ -2,6 +2,7 @@ import sys
 import os
 
 from .target import Target
+from .db import LevelStorage
 from .log import ZephyrusLogger
 from .utils import zephyrus_prompt
 
@@ -51,8 +52,9 @@ class Monitor:
     def load_baseline(self):
         for target in self.targets:
             if self.verbose:
-                print(f"{repr(target)} -> {target.checksum(self.hash_alg)}")
+                print(f"{repr(target)}: {target.checksum(self.hash_alg)}")
         logger.info("Baseline loaded.")
+        db = LevelStorage()
 
     def email_config(self):
         pass
