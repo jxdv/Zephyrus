@@ -25,7 +25,7 @@ class Monitor:
         print("load -> load / reload baseline")
         print("exit -> exit Zephyrus and stop monitoring")
 
-    def _parse_target(self, target):
+    def _parse_target_dir(self, target):
         if not os.path.isdir(target):
             logger.info(f"{target} is not a directory!")
             sys.exit(1)
@@ -86,5 +86,5 @@ terminate Zephyrus and run again with correct CLI args.
                 sys.exit(0)
 
     def run(self):
-        self._parse_target(self.target)
+        self._parse_target_dir(self.target)
         self.menu()
