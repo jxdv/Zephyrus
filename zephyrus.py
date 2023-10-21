@@ -10,6 +10,10 @@ from core.utils import print_logo
 
 
 def main():
+    if sys.version_info < (3, 6):
+        print("Python >= 3.6 required to run!")
+        sys.exit(1)
+
     args = parse_cli()
 
     if args.version:

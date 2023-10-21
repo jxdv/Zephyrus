@@ -20,7 +20,7 @@ def parse_cli():
         "--seconds",
         type=int,
         default=21600,
-        help="Interval to check integrity of monitored targets"
+        help="Interval to check integrity of monitored targets (6 hours by default)"
     )
     parser.add_argument(
         "--hash",
