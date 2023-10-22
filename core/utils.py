@@ -4,6 +4,8 @@ logger = ZephyrusLogger(__name__)
 
 
 def print_logo():
+    """Print ascii art logo"""
+
     print(r""" 
  ______          _                          
 |___  /         | |                         
@@ -17,6 +19,22 @@ def print_logo():
 
 
 def zephyrus_prompt(prompt_msg, choices=None):
+    """
+    Display the `prompt_msg` as a user prompt, wait for input, and validate the input
+    against provided `choices`.
+
+    Args:
+        prompt_msg (str): The message to be displayed as a user prompt.
+        choices (str or list, optional): A single string or a list of strings representing valid choices. If provided,
+            the user's input will be compared to these choices for validation. The input is case-insensitive.
+            Defaults to None.
+
+    Returns:
+        str or None: If `choices` is a single string, the user's input is returned if it matches the choice, or None if
+        it doesn't. If `choices` is a list, the user's input is returned if it matches one of the choices, or None if it
+        doesn't.
+    """
+
     choice = input(f"{prompt_msg}\nzephyrus> ").lower()
 
     if isinstance(choices, str):

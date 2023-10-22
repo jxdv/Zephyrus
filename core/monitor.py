@@ -36,17 +36,24 @@ class Monitor:
 
         self.db = plyvel.DB(f"{db_path}", create_if_missing=True)
 
-    def parse_target_dir(self, target):
-        if not os.path.exists(target):
-            logger.info(f"{target} doesn't exist!")
+    def parse_monitor_dir(self, monitor_dir):
+        """
+        Parse a directory for monitoring targets and load them.
+
+        Args:
+            monitor_dir (str): The path to the target directory for monitoring.
+        """
+
+        if not os.path.exists(monitor_dir):
+            logger.info(f"{monitor_dir} doesn't exist!")
             sys.exit(1)
 
-        if not os.path.isdir(target):
-            logger.info(f"{target} is not a directory!")
+        if not os.path.isdir(monitor_dir):
+            logger.info(f"{monitor_dir} is not a directory!")
             sys.exit(1)
 
         # Recursively parse all files of the target directory
-        for path, _, files in os.walk(target):
+        for path, _, files in os.walk(monitor_dir):
             for name in files:
                 file_path = os.path.join(path, name)
                 if not self.filter_check(name):
@@ -57,26 +64,51 @@ class Monitor:
             logger.info("No targets loaded!")
             sys.exit(1)
 
-    def filter_check(self, file_path):
+    def filter_check(self, file_name):
+        """
+        Check if a file name matches any ignored prefixes or suffixes.
+
+        Args:
+            file_name (str): The name of file to check against ignored prefixes and suffixes
+
+        Returns:
+            bool: True if the file name matches any ignored prefix or suffix, False otherwise.
+        """
+
         if self.ignored_prefixes:
-            return any(file_path.startswith(prefix) for prefix in self.ignored_prefixes)
+            return any(file_name.startswith(prefix) for prefix in self.ignored_prefixes)
         if self.ignored_suffixes:
-            return any(file_path.endswith(suffix) for suffix in self.ignored_suffixes)
+            return any(file_name.endswith(suffix) for suffix in self.ignored_suffixes)
         return False
 
     def verify_target_integrity(self, target_path, target_checksum):
+        """
+        Verify the integrity of a target by comparing its checksum.
+
+        Args:
+             target_path (str): The path to the target file.
+             target_checksum (str): The checksum to verify the file's integrity.
+
+        Returns:
+            bool: True if the file's integrity is verified (checksums match), False otherwise.
+        """
+
         sn = self.db.snapshot()
         stored_checksum = sn.get(target_path.encode())
 
         return stored_checksum.decode() == target_checksum
 
     def verify_baseline(self):
+        """Verify the baseline integrity of monitored targets."""
+
         for target in self.targets:
             target_checksum = target.checksum()
-            if not self.db.verify_target_integrity(str(target), target_checksum):
+            if not self.verify_target_integrity(str(target), target_checksum):
                 logger.warning(f"{target} checksum doesn't match!")
 
     def close_storage(self):
+        """Close the database connection and release associated resources."""
+
         if not self.db.closed:
             self.db.close()
             del self.db
@@ -84,7 +116,9 @@ class Monitor:
     # Menu and command handling
 
     def menu(self):
-        self.parse_target_dir(self.monitor_dir)
+        """Display a menu for interacting with Zephyrus."""
+
+        self.parse_monitor_dir(self.monitor_dir)
 
         print("Enter 'help' or '?' to see all available commands")
         while True:
@@ -102,16 +136,23 @@ class Monitor:
                 self.show_config()
             elif cmd == "exit":
                 logger.info("Take care!")
-                self.db.close_db()
+                self.close_storage()
                 sys.exit(0)
 
     def load_baseline(self):
+        """
+        Load or reload the baseline for monitoring.
+
+        Calculate and write the baseline data for the specified target into LevelDB database.
+        The data is written in a batch for efficient processing.
+        """
+
         wb = self.db.write_batch()
 
         for target in self.targets:
             target_checksum = target.checksum()
             if self.verbose:
-                logger.info(f"Writing {target}: {target_checksum}")
+                logger.info(f"Writing {repr(target)}: {target_checksum}")
             wb.put(str(target).encode(), target_checksum.encode())
         wb.write()
 
@@ -119,9 +160,13 @@ class Monitor:
         logger.info("Baseline loaded.")
 
     def email_config(self):
+        """Configure email notifications for Zephyrus."""
+
         raise NotImplementedError("TODO: email configuration")
 
     def start_monitor(self):
+        """Start monitoring the targets on the loaded baseline."""
+
         if not self.baseline_loaded:
             logger.warning("Can't start monitoring. Baseline isn't loaded!")
             return
@@ -134,6 +179,8 @@ class Monitor:
             self.verify_baseline()
 
     def show_config(self):
+        """Display the current Zephyrus configuration settings."""
+
         print("This is the current Zephyrus config. Restart with different CLI args to change it.")
         print("-" * 50)
         print(f"[+] Number of Targets: {len(self.targets)}")
@@ -146,6 +193,8 @@ class Monitor:
         print("-" * 50)
 
     def help_cmd(self):
+        """Display a list of available commands and their descriptions."""
+
         print("help / ? - show this help message")
         print("config - show current config")
         print("load - load / reload baseline")

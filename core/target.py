@@ -7,6 +7,17 @@ class Target:
         self.hash_alg = hash_alg
 
     def checksum(self, buff_size=128*1024):
+        """
+        Calculate and return checksum of the target using the specified hash algorithm.
+
+        Args:
+            buff_size (int, optional): The size of the buffer for reading the file in chunks. A larger buffer size can
+            improve performance for large files. Defaults to 128KB (128*1024).
+
+        Returns:
+            str: The hexadecimal representation of the hash digest of the target file.
+        """
+
         h = hashlib.new(self.hash_alg)
         buffer = bytearray(buff_size)
         buffer_view = memoryview(buffer)

@@ -17,13 +17,38 @@ class ZephyrusLogger(logging.Logger):
         self.logger.addHandler(stdout_logger)
 
     def info(self, msg):
+        """
+        Log an informational message.
+
+        Args:
+            msg (str): The message to be logged as information.
+        """
+
         self.logger.info(msg)
 
     def debug(self, msg):
+        """
+        Log a debugging message.
+
+        Args:
+            msg (str): The message to be logged for debugging purposes.
+        """
         self.logger.debug(msg)
 
     def warning(self, msg):
+        """
+        Log a warning message.
+
+        Args:
+            msg (str): The message to be logged as a warning.
+        """
         self.logger.warning(msg)
 
     def error(self, msg):
+        """
+        Log an error message.
+
+        Args:
+            msg (str): The message to be logged as an error.
+        """
         self.logger.error(msg)
