@@ -20,7 +20,7 @@ def main():
         print(f"Zephyrus version: {version}")
         sys.exit(0)
 
-    if not args.target:
+    if not args.dir:
         print("Please specify a target file!")
         sys.exit(1)
 
@@ -30,7 +30,7 @@ def main():
 
     print_logo()
 
-    monitor = Monitor(args.target,
+    monitor = Monitor(args.dir,
                       args.seconds,
                       args.hash,
                       args.verbose,

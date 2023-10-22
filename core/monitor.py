@@ -11,9 +11,9 @@ logger = ZephyrusLogger(__name__)
 
 
 class Monitor:
-    def __init__(self, target, interval, hash_alg, verbose, threads, ignored_prefixes, ignored_suffixes):
+    def __init__(self, monitor_dir, interval, hash_alg, verbose, threads, ignored_prefixes, ignored_suffixes):
         # initial construct
-        self.target_dir = target
+        self.monitor_dir = monitor_dir
         self.interval = interval
         self.hash_alg = hash_alg
         self.verbose = verbose
@@ -102,7 +102,7 @@ class Monitor:
             self.verify_baseline()
 
     def menu(self):
-        self.parse_target_dir(self.target_dir)
+        self.parse_target_dir(self.monitor_dir)
 
         print("Enter 'help' or '?' to see all available commands")
         while True:

@@ -13,7 +13,7 @@ def parse_cli():
         help="Show Zephyrus version"
     )
     parser.add_argument(
-        "--target",
+        "--dir",
         help="Path to dir which contains file to be monitored"
     )
     parser.add_argument(
