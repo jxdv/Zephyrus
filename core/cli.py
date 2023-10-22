@@ -36,6 +36,7 @@ def parse_cli():
     )
     parser.add_argument(
         "--threads",
+        type=int,
         help="Number of threads to use"
     )
     parser.add_argument(
