@@ -53,7 +53,7 @@ I recommend you check it out.
 
 - Check integrity every 5 minutes
 - Use MD5 for checksums
-- Ignore all files ending with *.pyc, *.docx
+- Ignore all files ending with .pyc, .docx
 
 ```commandline
 ./zephyrus.py --dir /path/to/dir/ --seconds 300 --hash md5 --ignore-suffix .pyc .docx
