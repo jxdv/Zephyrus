@@ -198,7 +198,7 @@ class Monitor:
 
         print("help / ? - show this help message")
         print("config - show current config")
-        print("load - load / reload baseline")
+        print("load - load baseline")
         print("start - start monitoring")
         print("email - configure notifications to be sent out using mail")
-        print("exit - exit Zephyrus and stop monitoring")
+        print("exit - exit Zephyrus")
