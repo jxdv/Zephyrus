@@ -25,6 +25,7 @@ class Monitor:
         self.ignored_suffixes = ignored_suffixes
 
         self.targets = []
+        self.cache = []
         self.baseline_loaded = False
 
         # LevelDB
@@ -103,7 +104,9 @@ class Monitor:
 
         for target in self.targets:
             target_checksum = target.checksum()
-            if not self.verify_target_integrity(str(target), target_checksum):
+            verified = self.verify_target_integrity(str(target), target_checksum)
+            if not verified and str(target) not in self.cache:
+                self.cache.append(str(target))
                 logger.warning(f"{target} checksum doesn't match!")
 
     def close_storage(self):
