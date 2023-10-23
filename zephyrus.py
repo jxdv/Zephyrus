@@ -34,7 +34,6 @@ def main():
                       args.seconds,
                       args.hash,
                       args.verbose,
-                      args.threads,
                       args.ignored_prefixes,
                       args.ignored_suffixes
                       )

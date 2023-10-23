@@ -37,11 +37,6 @@ def parse_cli():
         help="Verbose logging"
     )
     parser.add_argument(
-        "--threads",
-        type=int,
-        help="Number of threads to use"
-    )
-    parser.add_argument(
         "--ignore-prefix",
         nargs="+",
         dest="ignored_prefixes",

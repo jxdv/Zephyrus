@@ -14,13 +14,12 @@ logger = ZephyrusLogger(__name__)
 
 
 class Monitor:
-    def __init__(self, monitor_dir, interval, hash_alg, verbose, threads, ignored_prefixes, ignored_suffixes):
+    def __init__(self, monitor_dir, interval, hash_alg, verbose, ignored_prefixes, ignored_suffixes):
         # initial construct
         self.monitor_dir = monitor_dir
         self.interval = interval
         self.hash_alg = hash_alg
         self.verbose = verbose
-        self.threads = threads
         self.ignored_prefixes = ignored_prefixes
         self.ignored_suffixes = ignored_suffixes
 
@@ -190,7 +189,6 @@ class Monitor:
         print(f"[+] Monitoring interval: {self.interval}s")
         print(f"[+] Hashing algorithm: {self.hash_alg}")
         print(f"[+] Verbosity: {self.verbose}")
-        print(f"[+] Number of threads: {self.threads}")
         print(f"[+] Ignored prefixes: {self.ignored_prefixes}")
         print(f"[+] Ignored suffixes: {self.ignored_suffixes}")
         print("-" * 50)
