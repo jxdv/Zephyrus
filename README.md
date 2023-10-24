@@ -24,8 +24,7 @@ python3 -m unittest core/tests/test_sum.py
 ## Usage
 
 ```commandline
-usage: Zephyrus [-h] [--version] [--dir DIR] [--interval INTERVAL]
-                [--hash {sha256,md5}] [--verbose]
+usage: Zephyrus [-h] [--version] [--dir DIR] [--interval INTERVAL] [--random-interval] [--hash {sha256,md5}] [--verbose]
                 [--ignore-prefix IGNORED_PREFIXES [IGNORED_PREFIXES ...]]
                 [--ignore-suffix IGNORED_SUFFIXES [IGNORED_SUFFIXES ...]]
 
@@ -35,16 +34,15 @@ options:
   -h, --help            show this help message and exit
   --version             Show Zephyrus version
   --dir DIR             Path to dir which contains file to be monitored
-  --interval INTERVAL   Interval to check integrity of monitored targets (6
-                        hours by default)
-  --hash {sha256,md5}   Hashing algorithm for calculating checksums (default
-                        is sha256)
+  --interval INTERVAL   Interval to check integrity of monitored targets
+  --random-interval     Get a random monitoring interval
+  --hash {sha256,md5}   Hashing algorithm for calculating checksums (default is sha256)
   --verbose             Verbose logging
   --ignore-prefix IGNORED_PREFIXES [IGNORED_PREFIXES ...]
                         Files with supplied prefixes will be ignored
   --ignore-suffix IGNORED_SUFFIXES [IGNORED_SUFFIXES ...]
                         Files with supplied suffixes will be ignored
-```
+``` 
 
 SHA256 and MD5 are supported hash algorithms. I originally added MD5 for older machines as I thought it was less CPU
 intensive, but turns out It's not always the case. This [stackoverflow discussion](https://stackoverflow.com/questions/2722943/is-calculating-an-md5-hash-less-cpu-intensive-than-sha-family-functions)
@@ -100,11 +98,11 @@ zephyrus> config
 This is the current Zephyrus config. Restart with different CLI args to change it.
 --------------------------------------------------
 [+] Number of Targets: 1001
-[+] Monitoring interval: 21600s
-[+] Hashing algorithm: md5
+[+] Monitoring interval: 43200s (0.5 days)
+[+] Hashing algorithm: sha256
 [+] Verbosity: True
-[+] Ignored prefixes: ['_lae', 'test_']
-[+] Ignored suffixes: ['.ll', '.o']
+[+] Ignored prefixes: ['test_']
+[+] Ignored suffixes: ['.ll', '.o', '.c']
 --------------------------------------------------
 ```
 

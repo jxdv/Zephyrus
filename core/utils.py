@@ -1,3 +1,5 @@
+import random
+
 from .log import ZephyrusLogger
 
 logger = ZephyrusLogger(__name__)
@@ -47,3 +49,12 @@ def zephyrus_prompt(prompt_msg, choices=None):
             logger.info(f"zephyrus_prompt: Expected one of these: {choices} got '{choice}'")
             return
         return choice
+
+
+def get_random_interval():
+    """Generate random monitoring interval."""
+
+    lower_bound = 60
+    upper_bound = 60 * 60 * 24
+
+    return random.randint(lower_bound, upper_bound)
