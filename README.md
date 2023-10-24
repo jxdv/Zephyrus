@@ -24,8 +24,8 @@ python3 -m unittest core/tests/test_sum.py
 ## Usage
 
 ```commandline
-usage: Zephyrus [-h] [--version] [--dir DIR] [--seconds SECONDS] [--hash {sha256,md5}]
-                [--verbose] [--threads THREADS]
+usage: Zephyrus [-h] [--version] [--dir DIR] [--interval INTERVAL]
+                [--hash {sha256,md5}] [--verbose]
                 [--ignore-prefix IGNORED_PREFIXES [IGNORED_PREFIXES ...]]
                 [--ignore-suffix IGNORED_SUFFIXES [IGNORED_SUFFIXES ...]]
 
@@ -35,8 +35,10 @@ options:
   -h, --help            show this help message and exit
   --version             Show Zephyrus version
   --dir DIR             Path to dir which contains file to be monitored
-  --seconds SECONDS     Interval to check integrity of monitored targets (6 hours by default)
-  --hash {sha256,md5}   Hashing algorithm for calculating checksums (default is sha256)
+  --interval INTERVAL   Interval to check integrity of monitored targets (6
+                        hours by default)
+  --hash {sha256,md5}   Hashing algorithm for calculating checksums (default
+                        is sha256)
   --verbose             Verbose logging
   --ignore-prefix IGNORED_PREFIXES [IGNORED_PREFIXES ...]
                         Files with supplied prefixes will be ignored
@@ -56,7 +58,7 @@ I recommend you check it out.
 - Ignore all files ending with .pyc, .docx
 
 ```commandline
-./zephyrus.py --dir /path/to/dir/ --seconds 300 --hash md5 --ignore-suffix .pyc .docx
+./zephyrus.py --dir /path/to/dir/ --interval 300 --hash md5 --ignore-suffix .pyc .docx
 ```
 
 - Ignore all files starting with 'test_'
@@ -165,6 +167,8 @@ def verify_target_integrity(self, target_path, target_checksum):
 
 - Email configuration -> as of right now gmail requires phone number in order to create a new account, and as a person
 who values his privacy I'll need to find a way to bypass this or maybe use another mail provider.
+- Add other methods to check for a change in the file state than just calculating the checksum.
+(Different file attributes e.g: File permissions)
 
 ## Contributing
 

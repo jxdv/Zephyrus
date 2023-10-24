@@ -19,7 +19,7 @@ def parse_cli():
         help="Path to dir which contains file to be monitored"
     )
     parser.add_argument(
-        "--seconds",
+        "--interval",
         type=int,
         default=21600,
         help="Interval to check integrity of monitored targets (6 hours by default)"
