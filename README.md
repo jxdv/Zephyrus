@@ -66,6 +66,12 @@ I recommend you check it out.
 ./zephyrus.py --dir /path/to/dir --ignore-prefix test_ --verbose
 ```
 
+- Use random monitoring interval
+
+```commandline
+./zephyrus --dir /path/to/dir --random-interval
+```
+
 ## Interactive interface
 
 ```commandline
