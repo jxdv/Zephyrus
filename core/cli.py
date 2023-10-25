@@ -20,9 +20,13 @@ def parse_cli():
     )
     parser.add_argument(
         "--interval",
-        type=int,
-        default=21600,
-        help="Interval to check integrity of monitored targets (6 hours by default)"
+        help="Interval to check integrity of monitored targets"
+    )
+    parser.add_argument(
+        "--random-interval",
+        action="store_true",
+        dest="random_interval",
+        help="Get a random monitoring interval",
     )
     parser.add_argument(
         "--hash",

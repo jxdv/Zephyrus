@@ -7,6 +7,7 @@ from core import version
 from core.cli import parse_cli
 from core.monitor import Monitor
 from core.utils import print_logo
+from core.utils import get_random_interval
 
 
 def main():
@@ -24,14 +25,21 @@ def main():
         print("Please specify a target file!")
         sys.exit(1)
 
-    if args.seconds < 60:
+    if args.random_interval and args.interval:
+        print("Can't set both static interval and random interval!")
+        sys.exit(1)
+
+    if args.random_interval:
+        args.interval = get_random_interval()
+
+    if args.interval is not None and int(args.interval) < 60:
         print("interval has to be >= 60s")
         sys.exit(1)
 
     print_logo()
 
     monitor = Monitor(args.dir,
-                      args.seconds,
+                      int(args.interval),
                       args.hash,
                       args.verbose,
                       args.ignored_prefixes,

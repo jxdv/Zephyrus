@@ -186,7 +186,7 @@ class Monitor:
         print("This is the current Zephyrus config. Restart with different CLI args to change it.")
         print("-" * 50)
         print(f"[+] Number of Targets: {len(self.targets)}")
-        print(f"[+] Monitoring interval: {self.interval}s")
+        print(f"[+] Monitoring interval: {self.interval}s ({round(self.interval / 86_400, 2)} days)")
         print(f"[+] Hashing algorithm: {self.hash_alg}")
         print(f"[+] Verbosity: {self.verbose}")
         print(f"[+] Ignored prefixes: {self.ignored_prefixes}")
