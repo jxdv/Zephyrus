@@ -171,6 +171,7 @@ def verify_target_integrity(self, target_path, target_checksum):
 
 - Email configuration -> as of right now gmail requires phone number in order to create a new account, and as a person
 who values his privacy I'll need to find a way to bypass this or maybe use another mail provider.
+- Sending notifications through different platforms (TG / Signal..)
 - Add other methods to check for a change in the file state than just calculating the checksum.
 (Different file attributes e.g: File permissions)
 
